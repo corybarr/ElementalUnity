@@ -1,0 +1,16 @@
+1. OpenNIContext is a singleton MonoBehaviour:
+	- Update & OnApplicationQuit called directly (without depending on other scripts)
+	- Update called only once per frame
+	- Proper shutdown of singleton
+2. No XML file needed
+	- OpenNIContext always opens depth
+	- Open any other type of node with OpenNIContext.OpenNode helper function
+	- License is hard coded at the moment (shouldn't be this way)
+3. Softbar's behave properly regardless of mirror flag
+4. Added ImageMapViewer
+	- Should only be used as a starting point
+	- image is flipped
+	- only works when running unity in OpenGL
+	- Depends on Tao (install seperately for your platform)
+5. Minor code cleanups
+

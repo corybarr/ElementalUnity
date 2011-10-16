@@ -1,0 +1,10 @@
+My Kinect Notes
+---------------
+
+Installing OpenNI:
+	-make sure to change environment variable to point to /Bin instead of /bin inside of OpenNI dir
+	
+Recording ONI Files:
+   C:\Program Files\OpenNI\Samples\Bin\Release>NiBackRecorder.exe time 5 depth vga outdir .
+   -press D to "dump" the ONI file to disk
+
