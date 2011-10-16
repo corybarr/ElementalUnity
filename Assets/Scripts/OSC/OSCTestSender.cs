@@ -4,12 +4,12 @@ using System.Collections;
 public class OSCTestSender : MonoBehaviour {
 
 	private Osc oscHandler;
+	private GameObject respawn;
 	
 	public string remoteIp;
 	public int senderPort;
-	public int listenerPort;
-	
- 	~OSCTestSender() {
+	public int listenerPort; 
+	~OSCTestSender() {
 		print("Destructor called");
 		if (oscHandler != null) {
 			oscHandler.Cancel();
@@ -27,11 +27,17 @@ public class OSCTestSender : MonoBehaviour {
 		oscHandler = GetComponent<Osc>();
 		oscHandler.init(udp);
 		oscHandler.SetAddressHandler("/ballcolor", Example);
+		
+		respawn = GameObject.FindWithTag("testSphere");
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+		//DEVEL: GET RID OF THIS
+		if (Input.GetButtonDown("Depth Toggle")) {
+			print("OSC Sender button pressed");
+			moveSphere();
+		} 
 	}
 	
 	void onDisable() {
@@ -50,7 +56,13 @@ public class OSCTestSender : MonoBehaviour {
 		oscHandler.Send(oscM);
 	}
 	
-	public static void Example(OscMessage m) {
+	//DEVEL: get rid of this
+	private void moveSphere() {
+		respawn.transform.Translate(1.0f, 1.0f, 1.0f);
+	}
+	
+	public void Example(OscMessage m) {
 		print("----------> OSC example message received: (" + m + ")");
+		moveSphere();
 	}
 }
