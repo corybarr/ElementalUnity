@@ -1,0 +1,27 @@
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+
+Project("{862F3ED5-7B34-3108-AEE6-23133212A28E}") = "ElementalUnity", "Assembly-CSharp.csproj", "{872648A5-2EAB-821D-B4CA-BC88FBBB4DFA}"
+EndProject
+Project("{862F3ED5-7B34-3108-AEE6-23133212A28E}") = "ElementalUnity", "Assembly-UnityScript-firstpass.unityproj", "{37D6C683-BF9E-03A0-045A-872F2446D556}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{872648A5-2EAB-821D-B4CA-BC88FBBB4DFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{872648A5-2EAB-821D-B4CA-BC88FBBB4DFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{872648A5-2EAB-821D-B4CA-BC88FBBB4DFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{872648A5-2EAB-821D-B4CA-BC88FBBB4DFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37D6C683-BF9E-03A0-045A-872F2446D556}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37D6C683-BF9E-03A0-045A-872F2446D556}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37D6C683-BF9E-03A0-045A-872F2446D556}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37D6C683-BF9E-03A0-045A-872F2446D556}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	
+EndGlobal

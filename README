@@ -1,0 +1,6 @@
+To get this back up and running, do these:
+
+1) Assets -> Import Packages -> Particles
+2) Assign the UDPPacketIO, OSC, and OSCTestSender scripts back to the OscSender GameObject in the Hierarchy
+3) Assign the Floor Camera script back to the FloorCamera GameObject
+

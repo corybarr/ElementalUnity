@@ -26,7 +26,7 @@ public class OSCTestSender : MonoBehaviour {
 		
 		oscHandler = GetComponent<Osc>();
 		oscHandler.init(udp);
-		oscHandler.SetAddressHandler("/hand1", Example);
+		oscHandler.SetAddressHandler("/ballcolor", Example);
 	}
 	
 	// Update is called once per frame

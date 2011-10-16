@@ -4,4 +4,8 @@ Scripts\ Copy/*
 Kinect1*
 *rar
 Assets/Standard\ Assets/*
+Assembly*proj
+NewUnityWrapper*
+.DS_Store
+Temp/*
 
