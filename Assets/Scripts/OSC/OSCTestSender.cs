@@ -4,7 +4,8 @@ using System.Collections;
 public class OSCTestSender : MonoBehaviour {
 
 	private Osc oscHandler;
-	private GameObject respawn;
+	public OscBalls oscBallsGO;
+	private bool moveObject;
 	
 	public string remoteIp;
 	public int senderPort;
@@ -28,7 +29,8 @@ public class OSCTestSender : MonoBehaviour {
 		oscHandler.init(udp);
 		oscHandler.SetAddressHandler("/ballcolor", Example);
 		
-		respawn = GameObject.FindWithTag("testSphere");
+		//oscBallsGO = GameObject.FindWithTag("oscBallGroup");
+		moveObject = true;
 	}
 	
 	// Update is called once per frame
@@ -38,6 +40,11 @@ public class OSCTestSender : MonoBehaviour {
 			print("OSC Sender button pressed");
 			moveSphere();
 		} 
+		
+		if (moveObject) {
+			moveSphere();
+			moveObject = false;
+		}
 	}
 	
 	void onDisable() {
@@ -58,11 +65,32 @@ public class OSCTestSender : MonoBehaviour {
 	
 	//DEVEL: get rid of this
 	private void moveSphere() {
-		respawn.transform.Translate(1.0f, 1.0f, 1.0f);
+		oscBallsGO.transform.Translate(1.0f, 1.0f, 1.0f);
 	}
 	
 	public void Example(OscMessage m) {
-		print("----------> OSC example message received: (" + m + ")");
-		moveSphere();
+		//print("----------> OSC example message received: (" + m + ")");
+		string osc_report_string = "";
+		//print("OSC message: " + Osc.OscMessageToString(m) + "\n");
+		//int val3 = (int) m.Values[3];
+		//int val3 = (int) 3;
+		//print("Values[0]: " + m.Values[0] + ", Values[3] (converted): " + val3 + "\n");
+		//print("Values.Count: " + m.Values.Count + "\n");
+		//print("osc_report_string: " + osc_report_string + "\n");
+		for (int i = 0; i < m.Values.Count; i++) {
+			osc_report_string = osc_report_string + "Values[" + i + "]: " + m.Values[i] + "***";
+		}
+		print("osc_report_string: " + osc_report_string + "\n");
+		
+		//moveSphere();
+		//moveObject = true;
+		
+		changeBallColor(4, 65);
+	}
+	
+	private void changeBallColor(int ball_num, int color) {
+		oscBallsGO.changeBallColor(4,65);
+		
+		
 	}
 }
