@@ -10,6 +10,12 @@ public class OSCTestSender : MonoBehaviour {
 	public string remoteIp;
 	public int senderPort;
 	public int listenerPort; 
+	
+	public delegate void MidiEventReceiver(string status, int byte1, int byte2);
+	
+	public MidiEventReceiver midiEventReceiver;
+	
+	
 	~OSCTestSender() {
 		print("Destructor called");
 		if (oscHandler != null) {
@@ -85,7 +91,8 @@ public class OSCTestSender : MonoBehaviour {
 		//moveSphere();
 		//moveObject = true;
 		
-		changeBallColor(4, 65);
+		midiEventReceiver((string)m.Values[0], (int)m.Values[1], (int)m.Values[2]);
+		//changeBallColor(4, 65);
 	}
 	
 	private void changeBallColor(int ball_num, int color) {
