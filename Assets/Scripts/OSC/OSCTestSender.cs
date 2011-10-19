@@ -41,16 +41,6 @@ public class OSCTestSender : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//DEVEL: GET RID OF THIS
-		if (Input.GetButtonDown("Depth Toggle")) {
-			print("OSC Sender button pressed");
-			moveSphere();
-		} 
-		
-		if (moveObject) {
-			moveSphere();
-			moveObject = false;
-		}
 	}
 	
 	void onDisable() {
@@ -71,7 +61,7 @@ public class OSCTestSender : MonoBehaviour {
 	
 	//DEVEL: get rid of this
 	private void moveSphere() {
-		oscBallsGO.transform.Translate(1.0f, 1.0f, 1.0f);
+		//oscBallsGO.transform.Translate(1.0f, 1.0f, 1.0f);
 	}
 	
 	public void Example(OscMessage m) {
@@ -86,7 +76,7 @@ public class OSCTestSender : MonoBehaviour {
 		for (int i = 0; i < m.Values.Count; i++) {
 			osc_report_string = osc_report_string + "Values[" + i + "]: " + m.Values[i] + "***";
 		}
-		print("osc_report_string: " + osc_report_string + "\n");
+		//print("osc_report_string: " + osc_report_string + "\n");
 		
 		//moveSphere();
 		//moveObject = true;
