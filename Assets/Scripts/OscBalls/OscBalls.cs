@@ -6,12 +6,14 @@ public class OscBalls : MonoBehaviour
 	
 	//these should all be public after devel
 	public GameObject prefabOSCSphere;
+	public float ball_max_height = 4.0f;
 	private int numBalls = 127;
 	private int ball_ncols = 12;
 	private float ball_offset = 0.3f;
 	
 	private bool[] needs_update;
-
+	private int[] lastSeenVelocity;
+	
 	public Transform[] Balls {
 		get { return balls; }
 	}
@@ -40,8 +42,10 @@ public class OscBalls : MonoBehaviour
 	void Start ()
 	{
 		needs_update = new bool[numBalls];
+		lastSeenVelocity = new int[numBalls];
 		for (int i=0; i < numBalls; i++) {
 			needs_update[i] = false;
+			lastSeenVelocity[i] = 0;
 		}
 		
 		ballColors = new Color[numBalls];
@@ -92,9 +96,13 @@ public class OscBalls : MonoBehaviour
 	
 				// Use this for initialization
 	
-				objectTrajectory = new Vector3(Random.Range(-0.75f, 0.75f) * vecMagnitude, 
-				                               Random.Range(0.1f, 3.7f) * vecMagnitude, 
-				                               Random.Range(-0.75f, 0.75f) * vecMagnitude);
+				float y_vec_component = (float) lastSeenVelocity[i] / 127.0f;
+				y_vec_component *= ball_max_height;
+				
+				objectTrajectory = new Vector3(0.0f,//Random.Range(-0.75f, 0.75f) * vecMagnitude, 
+//				                               Random.Range(0.1f, 3.7f) * vecMagnitude, 
+				                               y_vec_component * vecMagnitude, 
+				                               0.0f);//Random.Range(-0.75f, 0.75f) * vecMagnitude);
 				
 				
 				 //Compenent.RigidBody ourRigidbody = gameObject.GetComponent <Rigidbody>();
@@ -106,9 +114,9 @@ public class OscBalls : MonoBehaviour
 		}
 	}
 	
-	public void changeBallColor (int ball_num, int color) {
+	public void changeBallColor (int ball_num, int velocity) {
 		Color myColor = new Color();
-		myColor.b = color;
+		myColor.b = velocity;
 		
 		ball_num %= numBalls;
 
@@ -116,7 +124,7 @@ public class OscBalls : MonoBehaviour
 		ballColors[ball_num] = myColor;
 		//balls[ball_num].renderer.material.color = myColor;
 		needs_update[ball_num] = true;
-		
+		lastSeenVelocity[ball_num] = velocity;
 
 		
 		

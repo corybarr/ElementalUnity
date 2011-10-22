@@ -14,7 +14,7 @@ public class OSCTestSender : MonoBehaviour {
 	public delegate void MidiEventReceiver(string status, int byte1, int byte2);
 	
 	public MidiEventReceiver midiEventReceiver;
-	
+	private int sceneChange = -1;	
 	
 	~OSCTestSender() {
 		print("Destructor called");
@@ -33,7 +33,8 @@ public class OSCTestSender : MonoBehaviour {
 		
 		oscHandler = GetComponent<Osc>();
 		oscHandler.init(udp);
-		oscHandler.SetAddressHandler("/ballcolor", Example);
+		oscHandler.SetAddressHandler("/acw", OSCCallback);
+		//oscHandler.SetAddressHandler("/scenechange", SceneChangerCallback);
 		
 		//oscBallsGO = GameObject.FindWithTag("oscBallGroup");
 		moveObject = true;
@@ -41,6 +42,10 @@ public class OSCTestSender : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (sceneChange != -1) {
+			Application.LoadLevel(sceneChange);
+			sceneChange = -1;
+		}
 	}
 	
 	void onDisable() {
@@ -64,30 +69,24 @@ public class OSCTestSender : MonoBehaviour {
 		//oscBallsGO.transform.Translate(1.0f, 1.0f, 1.0f);
 	}
 	
-	public void Example(OscMessage m) {
+	public void OSCCallback(OscMessage m) {
 		//print("----------> OSC example message received: (" + m + ")");
 		string osc_report_string = "";
-		//print("OSC message: " + Osc.OscMessageToString(m) + "\n");
-		//int val3 = (int) m.Values[3];
-		//int val3 = (int) 3;
-		//print("Values[0]: " + m.Values[0] + ", Values[3] (converted): " + val3 + "\n");
-		//print("Values.Count: " + m.Values.Count + "\n");
-		//print("osc_report_string: " + osc_report_string + "\n");
+		
+		string command = (string) m.Values[0];
+		/*
 		for (int i = 0; i < m.Values.Count; i++) {
 			osc_report_string = osc_report_string + "Values[" + i + "]: " + m.Values[i] + "***";
 		}
-		//print("osc_report_string: " + osc_report_string + "\n");
-		
-		//moveSphere();
-		//moveObject = true;
-		
-		midiEventReceiver((string)m.Values[0], (int)m.Values[1], (int)m.Values[2]);
-		//changeBallColor(4, 65);
-	}
-	
-	private void changeBallColor(int ball_num, int color) {
-		oscBallsGO.changeBallColor(4,65);
-		
-		
-	}
+		print("osc_report_string: " + osc_report_string + "\n");
+		*/
+		if(command == "midievent") {
+			midiEventReceiver((string)m.Values[1], (int)m.Values[2], (int)m.Values[3]);
+		}
+		else if (command == "scenechange") {
+			Debug.Log("SCENE CHANGE!!!!!!!!!");
+			//Application.LoadLevel((int) m.Values[1]);
+			sceneChange = (int) m.Values[1];
+		}
+	}	
 }
