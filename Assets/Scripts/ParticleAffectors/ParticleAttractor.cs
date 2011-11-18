@@ -4,8 +4,8 @@ using System.Collections;
 public class ParticleAttractor : MonoBehaviour {
 	
 	public ParticleEmitter p;
-	public int recalcRate = 1; //how many frames to wait before recalcuting trajectories
-	public float attraction = 0.5f;
+	public int recalcRate = 1; //how many frames to wait before recalculating trajectories
+	public float attraction = 0.01f;
 	
 	private int recalcCounter = 0;
 	private Vector3 attractorPosition;
@@ -15,8 +15,8 @@ public class ParticleAttractor : MonoBehaviour {
 		attractorPosition = transform.position;
 	}
 	
-	private double GetVectorMagnitude(Vector3 v3) {
-		return(System.Math.Sqrt(v3.x * v3.x + 
+	private float GetVectorMagnitude(Vector3 v3) {
+		return((float) System.Math.Sqrt(v3.x * v3.x + 
 				                v3.y * v3.y + 
 				                v3.z * v3.z));
 	}
@@ -33,9 +33,7 @@ public class ParticleAttractor : MonoBehaviour {
 		v3.z = v3.z / m;
 		return(v3);
 	}
-	
-	
-	// Update is called once per frame
+
 	void Update () {
 		recalcCounter++;
 		attractorPosition = transform.position;
@@ -46,16 +44,17 @@ public class ParticleAttractor : MonoBehaviour {
 
 			int numParticles = starparticles.GetUpperBound(0);
 			for(int i = 0; i < numParticles; i++) {				
-				Vector3 partVelocity = starparticles[i].velocity;
-				double magnitude = GetVectorMagnitude(partVelocity);
-				Vector3 normalizedParticleVec = NormalizeVector(partVelocity, magnitude);
+				Vector3 currentVelocity = starparticles[i].velocity;
+				float magnitude = GetVectorMagnitude(currentVelocity);
+				Vector3 normalizedCurVec = NormalizeVector(currentVelocity, magnitude);
 				Vector3 vecToAttractor = attractorPosition - starparticles[i].position;
 				Vector3 normalizedVecToAttractor = NormalizeVector(vecToAttractor);
-				float m = (float) magnitude;
-				Vector3 newVecToAttractor = new Vector3(normalizedVecToAttractor.x * m,
-				                                        normalizedVecToAttractor.y * m,
-				                                        normalizedVecToAttractor.z * m);
-				starparticles[i].velocity = newVecToAttractor;
+
+				Vector3 averagedVector = attraction * normalizedVecToAttractor + 
+					(1.0f - attraction) * normalizedCurVec;
+				Vector3 normalizedAveragedVec = NormalizeVector(averagedVector);
+				
+				starparticles[i].velocity = normalizedAveragedVec * magnitude;
 			}
 			p.particles = starparticles;
 		}	
